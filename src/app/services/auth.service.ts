@@ -33,13 +33,18 @@ export class AuthService {
 
       const usersJSON = JSON.parse(users)
 
-      const userFound = usersJSON.find(({username , password}:User) => {
+      const userFound:User = usersJSON.find(({username , password}:User) => {
         return password === userData.password && username === userData.username
       })
 
       if(userFound)
       {
-        this.user = userFound
+        const currentUser:User = {
+          id:userFound.id,
+          username:userFound.username
+        }
+
+        this.user = currentUser;
         localStorage.setItem("CurrentUser",JSON.stringify(this.user))
         response.code = 200;
         response.message = "The user was found"
