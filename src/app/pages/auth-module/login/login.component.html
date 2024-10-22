@@ -1,0 +1,24 @@
+<section class="container">
+    <div class="login-container">
+        <p class="title">User not logged in system</p>
+        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+            <h2>Pokedex - Lite</h2>
+            <div class="input-container">
+                <input class="text-input" type="text" formControlName="username" placeholder="Your username...">
+                <div *ngIf="loginForm.controls['username'].touched">
+                    <small *ngIf="loginForm.controls['username'].errors?.['required']" class="error-message">
+                        The field is required
+                    </small>
+                </div>
+                <input class="text-input" type="password" formControlName="password" placeholder="Your password...">
+                <div *ngIf="loginForm.controls['password'].touched">
+                    <small *ngIf="loginForm.controls['password'].errors?.['required']" class="error-message">
+                        The field is required
+                    </small>
+                </div>
+
+                <input type="submit" class="btn-input" value="Login">
+            </div>
+        </form>
+    </div>
+</section>
