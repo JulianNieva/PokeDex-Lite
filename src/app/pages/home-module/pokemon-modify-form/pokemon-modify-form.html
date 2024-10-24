@@ -1,21 +1,25 @@
-<section class="container" *ngIf="pokemonToModify">
-    <form class="form-container" [formGroup]="pokemonForm" (ngSubmit)="modifiedPokemon()">
+<section class="container" *ngIf="pokemonReceived">
+    <form class="form-container" [formGroup]="pokemonForm">
         <label for="name">Pokemon name</label>
         <input type="text" formControlName="name">
         <label for="name">Minimum level to find it</label>
         <input type="number" formControlName="level">
         <label for="name">You can Add/Delete types</label>
-        <!-- <select (change)="onTypeSelect($event)">
-            <option *ngFor="let type of typesList" [value]="type.id">
-                {{type.name}}
-            </option>
-        </select> -->
-        <div class="types-container">
-            <div *ngFor="let currentType of selectedTypes" >
-                <!-- <button type="button" (click)="deleteType(currentType)">
-                    {{currentType.name}} X
-                </button> -->
-            </div>
-        </div>
     </form>
+    <select (change)="onTypeSelect()" [(ngModel)]="selectedType">
+        <option *ngFor="let type of typesList" [ngValue]="type">
+            {{type.name}}
+        </option>
+    </select>
+    <div class="types-container">
+        <div *ngFor="let currentType of selectedTypes" >
+            <button type="button" (click)="deleteType(currentType)">
+                {{currentType.name}} X
+            </button>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button type="button" class="modify-button" (click)="checkPokemon()">Save Changes</button>
+    </div>
 </section>

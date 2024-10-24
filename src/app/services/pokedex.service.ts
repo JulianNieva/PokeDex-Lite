@@ -39,8 +39,7 @@ export class PokedexService {
     // We create the pokedex
     const pokedex = pokemons.map((pokemon:Pokemon) => {
       // We get the abilities of said pokemon
-      const pokemonAbilities = pokAbilities
-        .filter((pa:any) => pa.pokemonId === pokemon.id)
+      const pokemonAbilities = pokAbilities.filter((pa:any) => pa.pokemonId === pokemon.id)
         .map((pa:any) => {
           const ability = abilities.find((ab:any) => ab.id === pa.abilityId);
           return {
@@ -50,8 +49,7 @@ export class PokedexService {
         });
 
       // We get the type of said pokemon
-      const pokemonTypes = pokTypes
-        .filter((pt:any) => pt.pokemonId === pokemon.id)
+      const pokemonTypes = pokTypes.filter((pt:any) => pt.pokemonId === pokemon.id)
         .map((pt:any) => types.find((type:any) => type.id === pt.typeId));
 
       //We return the full pokemon details
@@ -77,8 +75,12 @@ export class PokedexService {
     const pokAbilities = JSON.parse(localStorage.getItem('Pok-Abilities') || "[]");
     const pokTypes = JSON.parse(localStorage.getItem('Pok-Types') || "[]");
 
-    //We get the max id from the pokemons list
-    const maxPokemonId = pokemonList.length + 1;
+    //We get the max id from the storage, making sure we at least have one or we assign the first id
+    const maxPokemonId = (pokemonList.length > 0 ? Math.max(...pokemonList.map((pok: Pokemon) => pok.id)) + 1 : 1)
+    let maxPokAbilitiesId = (pokAbilities.length > 0 ? Math.max(...pokAbilities.map((pok: Pokemon) => pok.id)) + 1 : 1)
+    let maxPokTypesId = (pokTypes.length > 0 ? Math.max(...pokTypes.map((pok: Pokemon) => pok.id)) + 1 : 1)
+
+    console.info(maxPokemonId)
 
     const pokemonToAdd:Pokemon = {
       id: maxPokemonId,
@@ -92,7 +94,7 @@ export class PokedexService {
     //We add the correct abilities relations to the list
     pokemon.abilitiesList.forEach((ability:Ability) => {
       pokAbilities.push({
-        id:pokAbilities.length + 1,
+        id:maxPokAbilitiesId++,
         pokemonId:maxPokemonId,
         abilityId:ability.id
       })
@@ -101,7 +103,7 @@ export class PokedexService {
     //We add the correct types relations to the list
     pokemon.typesList.forEach((type:Type) => {
       pokTypes.push({
-        id:pokTypes.length + 1,
+        id:maxPokTypesId++,
         pokemonId:maxPokemonId,
         typeId:type.id
       })
@@ -111,6 +113,47 @@ export class PokedexService {
     localStorage.setItem('Pokemons', JSON.stringify(pokemonList));
     localStorage.setItem('Pok-Types', JSON.stringify(pokTypes));
     localStorage.setItem('Pok-Abilities', JSON.stringify(pokAbilities));
+
+    return true;
+  }
+
+  modifyPokemon(pokemon:any):boolean{
+
+    //Check pokedex status
+    if(!this.checkPokedexStatus())
+      return false;
+
+    //Retrieve data from localstorage
+    const pokemonList = JSON.parse(localStorage.getItem('Pokemons') || "[]");
+    const pokTypes = JSON.parse(localStorage.getItem('Pok-Types') || "[]");
+
+    //We find the index of the pokemon
+    const indexOfPokemon = pokemonList.findIndex((p:Pokemon) => p.id === pokemon.id)
+    let maxPokTypesId = (pokTypes.length > 0 ? Math.max(...pokTypes.map((pok: Pokemon) => pok.id)) + 1 : 1)
+
+    if(indexOfPokemon === -1)
+      return false;
+
+    //We modify its fields
+    pokemonList[indexOfPokemon].name = pokemon.name;
+
+    //Get a filtered list without previous relations
+    const updatedPokTypes = pokTypes.filter((pt:any) => pt.pokemonId !== pokemon.id)
+    console.info(updatedPokTypes)
+
+    //We update the list with new ids
+    pokemon.types.forEach((type:Type) => {
+      updatedPokTypes.push({
+        id:maxPokTypesId++,
+        pokemonId:pokemon.id,
+        typeId:type.id
+      })
+      console.info(updatedPokTypes)
+    });
+
+    //Save data
+    localStorage.setItem('Pokemons', JSON.stringify(pokemonList));
+    localStorage.setItem('Pok-Types', JSON.stringify(updatedPokTypes));
 
     return true;
   }
@@ -128,23 +171,19 @@ export class PokedexService {
 
     while (true) {
       //We get the next evolution of the pokemon
-      const evolution = evolutions.find((evo:Evolution) => evo.pokemonId === currentPokemonId)
+      const nextEvolution = evolutions.find((evo:Evolution) => evo.pokemonId === currentPokemonId)
 
-      console.info(evolution)
-
-      if(!evolution)
+      if(!nextEvolution)
         break;
 
       // We get the evolved pokemon deatils from the pokemon list
-      const evolvedPokemon = pokemonList.find((p:Pokemon) => p.id === evolution.evolvedPokemonId);
-      console.info(evolution)
+      const evolvedPokemon = pokemonList.find((p:Pokemon) => p.id === nextEvolution.evolvedPokemonId);
       if (!evolvedPokemon) {
         break;
       }
   
       // We get their evolution types
-      const pokemonTypes = pokTypes
-        .filter((pt:any) => pt.pokemonId === evolvedPokemon.id)
+      const pokemonTypes = pokTypes.filter((pt:any) => pt.pokemonId === evolvedPokemon.id)
         .map((pt:any) => {
           const type = types.find((t:Type)=> t.id === pt.typeId);
           return type.name;
@@ -154,7 +193,7 @@ export class PokedexService {
       evolutionChain.push({
         name: evolvedPokemon.name,
         types: pokemonTypes,
-        level: evolution.levelEvolution
+        level: nextEvolution.levelEvolution
       });
   
       //We assign the id of the current evolution to search for the next one

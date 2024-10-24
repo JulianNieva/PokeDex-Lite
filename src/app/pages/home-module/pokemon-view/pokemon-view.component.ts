@@ -17,7 +17,6 @@ export class PokemonViewComponent implements OnInit {
     {
       this.possibleEvolutions = evolutions
     }
-    console.info(this.possibleEvolutions)
   }
 
 

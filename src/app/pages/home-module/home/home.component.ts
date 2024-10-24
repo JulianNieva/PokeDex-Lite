@@ -55,6 +55,23 @@ export class HomeComponent implements OnInit{
     }
   }
 
+  modifyPokemon($event:any){
+    console.info($event)
+
+    const returnResponse = this.pokedexSrv.modifyPokemon($event)
+
+    if(returnResponse)
+      {
+        alert("Pokemon modified succesfully");
+        this.pokedexSrv.loadPokedex();
+        this.pokedex = this.pokedexSrv.getPokedex()
+        this.goBack()
+      }
+      else{
+        alert("Something went wrong")
+      }
+  }
+
   showPokemonToModify($event:any){
     this.selectedPokemon = $event;
     this.showList = false;

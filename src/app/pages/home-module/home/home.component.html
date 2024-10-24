@@ -8,7 +8,7 @@
                 </div>
 
             <div *ngIf="showModifyPokemonView">
-                <app-pokemon-modify-form [pokemonToModify]="selectedPokemon"></app-pokemon-modify-form>
+                <app-pokemon-modify-form [pokemonReceived]="selectedPokemon" (modifyPokemon)="modifyPokemon($event)" ></app-pokemon-modify-form>
             </div>
 
             <div *ngIf="showPokemonView">

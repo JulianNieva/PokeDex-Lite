@@ -13,19 +13,20 @@ export class PokemonModifyForm implements OnInit{
   pokemonForm: FormGroup;
   selectedTypes:Type[] = []
   typesList:Type[] = []
+  selectedType:Type = {id:0,name:""}
 
-  @Input() pokemonToModify:any
+  @Input() pokemonReceived:any
   @Output() modifyPokemon:EventEmitter<any> = new EventEmitter<any>()
 
   ngOnInit(): void {
-    if (this.pokemonToModify) {
+    if (this.pokemonReceived) {
       this.pokemonForm.patchValue({
-        name: this.pokemonToModify.name,
-        level: this.pokemonToModify.level
+        name: this.pokemonReceived.name,
+        level: this.pokemonReceived.level
       });
 
       this.loadTypes()
-      this.selectedTypes = this.pokemonToModify.types
+      this.selectedTypes = this.pokemonReceived.types
     }
   }
 
@@ -37,9 +38,24 @@ export class PokemonModifyForm implements OnInit{
     })
   }
 
-  modifiedPokemon()
+  checkPokemon()
   {
+    if(this.pokemonForm.valid && this.selectedTypes.length != 0)
+    {
+      const pokemonToModify = {
+        id:this.pokemonReceived.id,
+        name:this.pokemonForm.controls['name'].value,
+        level:this.pokemonForm.controls['level'].value,
+        types:this.selectedTypes
+      }
 
+      console.info(pokemonToModify);
+
+      this.modifyPokemon.emit(pokemonToModify);
+    }
+    else{
+      alert("Invalid Form");
+    }
   }
 
   loadTypes()
@@ -50,21 +66,17 @@ export class PokemonModifyForm implements OnInit{
     }
   }
 
-  //onTypeSelect(event:any)
-  //{
-  //   const selectElement = event.target as HTMLSelectElement;
-  //   const selectedType = this.typesList.find(type => type.id == selectElement.value);
+  onTypeSelect()
+  {
+    const result = this.selectedTypes.find(ab => ab.id === this.selectedType.id)
 
-  //   if (selectedType) {
-  //     // Ya tienes el objeto completo seleccionado (id, name, etc.)
-  //     console.log('Tipo seleccionado:', selectedType);
-  //     // Aquí puedes manejar la selección del tipo completo
-  //     this.selectedTypes.push(selectedType);  // Guardamos el objeto tipo completo
-  //   }
-  // }
+    if(!result)
+    {
+      this.selectedTypes.push(this.selectedType)
+    }
+  }
 
-  // deleteType(selectedType:any){
-  //   console.info(selectedType)
-  //   this.selectedTypes = this.selectedTypes.filter(t => t.id !== selectedType.id);
-  // }
+  deleteType(selectedType:any){
+    this.selectedTypes = this.selectedTypes.filter(t => t.id !== selectedType.id);
+  }
 }

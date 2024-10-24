@@ -28,7 +28,7 @@ input[type=text]
 
 input[type=number]
 {
-    width: 30%;
+    width: 20%;
     margin: auto;
     height: 2rem;
     border-radius: 10px;
@@ -47,12 +47,27 @@ input[type=number]::-webkit-outer-spin-button {
     justify-content: space-evenly;
     button{
         border-radius: 10px;
-        background-color: lightblue;
+        background-color:#F4C095;
+        cursor: pointer;
         border: 1px solid
     }
 }
 
 select{
+    height: 2rem;
     width: 50%;
-    margin: auto;
+    margin: 0.5rem auto;
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+}
+
+.btn-container{
+    margin: 1.5rem auto;
+    button{
+        height: 2rem;
+        border-radius: 12px;
+        background-color: yellow;
+        border: 1px solid;
+        cursor: pointer;
+    }
 }
