@@ -1,0 +1,58 @@
+.container{
+    min-height: 20rem;
+    max-height: 40rem;
+    margin: 1rem 1rem;
+    border: 1px solid black;
+}
+
+.form-container{
+    margin-top: 0.5rem;
+    display: flex;
+    height: 100%;
+    width:100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+label{
+    margin:0.5rem auto;
+}
+
+input[type=text]
+{
+    width: 50%;
+    margin: auto;
+    height: 2rem;
+    border-radius: 10px;
+}
+
+input[type=number]
+{
+    width: 30%;
+    margin: auto;
+    height: 2rem;
+    border-radius: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.types-container{
+    margin-top: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    button{
+        border-radius: 10px;
+        background-color: lightblue;
+        border: 1px solid
+    }
+}
+
+select{
+    width: 50%;
+    margin: auto;
+}
