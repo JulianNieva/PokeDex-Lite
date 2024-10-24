@@ -49,8 +49,6 @@ export class PokemonModifyForm implements OnInit{
         types:this.selectedTypes
       }
 
-      console.info(pokemonToModify);
-
       this.modifyPokemon.emit(pokemonToModify);
     }
     else{

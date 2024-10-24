@@ -16,7 +16,6 @@ export class PokedexService {
   loadPokedex(){
     if(!this.checkPokedexStatus())
     {
-      console.log()
       this.initLocalStorage()
     }
 
@@ -80,8 +79,6 @@ export class PokedexService {
     let maxPokAbilitiesId = (pokAbilities.length > 0 ? Math.max(...pokAbilities.map((pok: Pokemon) => pok.id)) + 1 : 1)
     let maxPokTypesId = (pokTypes.length > 0 ? Math.max(...pokTypes.map((pok: Pokemon) => pok.id)) + 1 : 1)
 
-    console.info(maxPokemonId)
-
     const pokemonToAdd:Pokemon = {
       id: maxPokemonId,
       name:pokemon.name,
@@ -139,7 +136,6 @@ export class PokedexService {
 
     //Get a filtered list without previous relations
     const updatedPokTypes = pokTypes.filter((pt:any) => pt.pokemonId !== pokemon.id)
-    console.info(updatedPokTypes)
 
     //We update the list with new ids
     pokemon.types.forEach((type:Type) => {
@@ -148,7 +144,7 @@ export class PokedexService {
         pokemonId:pokemon.id,
         typeId:type.id
       })
-      console.info(updatedPokTypes)
+
     });
 
     //Save data

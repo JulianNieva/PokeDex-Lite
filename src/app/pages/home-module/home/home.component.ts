@@ -28,8 +28,6 @@ export class HomeComponent implements OnInit{
 
     this.pokedex = this.pokedexSrv.getPokedex();
 
-    console.info(this.pokedex)
-
     this.loading = false;
   }
 
@@ -38,8 +36,6 @@ export class HomeComponent implements OnInit{
 
   addPokemon($event:any)
   {
-    console.info($event)
-
     const returnResponse = this.pokedexSrv.addPokemon($event)
 
     if(returnResponse)
@@ -47,7 +43,6 @@ export class HomeComponent implements OnInit{
       alert("Pokemon added succesfully");
       this.pokedexSrv.loadPokedex();
       this.pokedex = this.pokedexSrv.getPokedex()
-      console.info(this.pokedex);
       this.goBack()
     }
     else{
@@ -56,8 +51,6 @@ export class HomeComponent implements OnInit{
   }
 
   modifyPokemon($event:any){
-    console.info($event)
-
     const returnResponse = this.pokedexSrv.modifyPokemon($event)
 
     if(returnResponse)
@@ -75,7 +68,6 @@ export class HomeComponent implements OnInit{
   showPokemonToModify($event:any){
     this.selectedPokemon = $event;
     this.showList = false;
-    console.info(this.selectedPokemon)
     this.showModifyPokemonView = true;
   }
 
