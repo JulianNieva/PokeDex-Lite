@@ -1,0 +1,16 @@
+<div *ngIf="pokemonList" class="list-container">
+    <div *ngFor="let pokemon of pokemonList" class="pokemon-card">
+        <p class="name">{{pokemon.name}}</p>
+        <p class="level">Lvl: {{pokemon.level}}</p>
+        <h3>Types</h3>
+        <div class="types-container">
+            <div *ngFor="let type of pokemon.types">
+                <p class="type">{{type.name}}</p>
+            </div>
+        </div>
+        <div class="options-container">
+            <button type="button" (click)="pokemonClicked(pokemon)">Details</button>
+            <button type="button" (click)="modifyPokemon(pokemon)">Modify</button>
+        </div>
+    </div>
+</div>

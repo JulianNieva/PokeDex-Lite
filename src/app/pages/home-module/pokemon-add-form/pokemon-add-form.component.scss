@@ -1,0 +1,70 @@
+.container{
+    min-height: 20rem;
+    max-height: 40rem;
+    margin: 1rem 1rem;
+    border: 1px solid black;
+}
+
+.sub-container{
+    display: flex;
+    height: 100%;
+    width:100%;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.form-container{
+    display: flex;
+    height: 100%;
+    width:100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+label{
+    margin:0.5rem auto;
+}
+
+input[type=text]
+{
+    width: 50%;
+    margin: auto;
+    height: 2rem;
+    border-radius: 10px;
+}
+
+.selected-options-container{
+    margin-top: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    p{
+        font-weight: bold;
+    }
+}
+
+select{
+    width: 30%;
+    margin: auto;
+}
+
+.error-msg{
+    color: red;
+    margin: 0.2rem auto;
+
+}
+
+.btn-add{
+    margin: 1.5rem 0;
+    height: 2rem;
+    width: 100%;
+    button{
+        margin: auto;
+        height: 100%;
+        border-radius: 12px;
+        border: 1px solid;
+        background-color: chartreuse;
+    }
+}

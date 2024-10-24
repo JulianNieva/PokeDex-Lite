@@ -1,0 +1,33 @@
+<section class="container" *ngIf="pokemonToShow">
+    <div class="view-container">
+        <h1>Name: {{pokemonToShow.name | uppercase}}</h1>
+        <h2>Level on which you can find it: {{pokemonToShow.level}}</h2>
+        <h3>Type/s</h3>
+        <div class="types-container">
+            <div *ngFor="let type of pokemonToShow.types">
+                <p>{{type.name}}</p>
+            </div>
+        </div>
+        <h3>Abilities</h3>
+        <div class="abilities-container">
+            <div *ngFor="let ability of pokemonToShow.abilities" class="">
+                <p class="name">{{ability.name}}</p>
+                <p class="description">{{ability.description}}</p>
+            </div>
+        </div>
+        <div *ngIf="possibleEvolutions">
+            <h3 >Possible Evolutions</h3>
+            <div class="evolutions-container">
+                <div *ngFor="let evolution of possibleEvolutions" class="evolution">
+                    <p>{{evolution.name}}</p>
+                    <p>Evolves at: {{evolution.level}}</p>
+                    <div class="types-container">
+                        <div *ngFor="let type of evolution.types">
+                            <p>{{type}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

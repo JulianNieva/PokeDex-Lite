@@ -1,0 +1,49 @@
+<section class="container">
+    <div class="sub-container">
+        <form class="form-container" [formGroup]="pokemonAddForm">
+            <label for="name">Pokemon name</label>
+            <input type="text" formControlName="name">
+            <small class="error-msg" *ngIf="pokemonAddForm.controls['name'].errors?.['required'] && pokemonAddForm.controls['name'].touched">
+                The name is required
+            </small>
+            <label for="name">Minimum level to find it</label>
+            <input type="text" formControlName="level">
+            <small class="error-msg" *ngIf="pokemonAddForm.controls['level'].errors?.['required'] && pokemonAddForm.controls['level'].touched">
+                The level is required
+            </small>
+            <small class="error-msg" *ngIf="pokemonAddForm.controls['level'].errors?.['pattern'] && pokemonAddForm.controls['level'].touched">
+                The level must be a number
+            </small>
+        </form>
+
+        <label for="name">Select it's types</label>
+        <select [(ngModel)]="selectedType" (change)="addType()">
+            <option *ngFor="let type of typesList" [ngValue]="type">
+                {{type.name}}
+            </option>
+        </select>
+        <div class="selected-options-container">
+            <div *ngFor="let currentType of selectedTypes" >
+                <p>{{currentType.name}}</p>
+            </div>
+        </div>
+
+        <label for="name">Select it's abilities</label>
+        <select [(ngModel)]="selectedAbility" (change)="addAbility()"> 
+            <option *ngFor="let ability of abilitiesList" [ngValue]="ability">
+                {{ability.name}}
+            </option>
+        </select>
+        <div class="selected-options-container">
+            <div *ngFor="let currentAbility of selectedAbilities">
+                <p>{{currentAbility.name}}</p>
+            </div>
+        </div>
+
+        <div class="btn-add">
+            <button type="submit" (click)="validatePokemon()">
+                Add Pokemon
+            </button>
+        </div>
+    </div>
+</section>
